@@ -53,7 +53,7 @@ class JESystem
 	//==============================================
 	public:
 		bool Initialize();
-
+		
 		void Shutdown();
 
 		void Run();
