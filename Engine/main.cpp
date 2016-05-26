@@ -28,13 +28,6 @@ int WINAPI WinMain(
 	{
 		System->Run();
 	}
-	else
-	{
-		System->Shutdown();
-		delete System;
-		System = 0;
-		return 2;
-	}
 	//===================================================
 
 	//===================================================

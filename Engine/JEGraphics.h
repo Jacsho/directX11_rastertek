@@ -7,11 +7,15 @@
 //==============================================
 #include <Windows.h>
 
+//==============================================
+// MY INCLUDES
+//==============================================
+#include "JED3D.h"
 
 //==============================================
 // GLOBALS
 //==============================================
-const bool FULL_SCREEN = true;
+const bool FULL_SCREEN = false;
 const bool VSYNC_ENABLED = true;
 const float SCREEN_DEPTH = 1000.0f;
 const float SCREEN_NEAR = 0.1f;
@@ -24,7 +28,8 @@ class JEGraphics
 	//==============================================
 	//				ATTRIBUTES
 	//==============================================
-
+	private:
+		JED3D * m_pD3D;
 
 	//==============================================
 	//			CONSTRUCTORS & DESTRUCTOR
@@ -41,16 +46,16 @@ class JEGraphics
 	//==============================================
 	//				   METHODS
 	//==============================================
+	public:
+		bool Initialize(
+			int screenWidth,
+			int screenHeight,
+			HWND hwnd
+		);
 
-	bool Initialize(
-		int screenWidth,
-		int screenHeight,
-		HWND hwnd
-	);
+		void Shutdown();
 
-	void Shutdown();
-
-	bool Frame();
+		bool Frame();
 
 private:
 

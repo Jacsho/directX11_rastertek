@@ -142,12 +142,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="JED3D.cpp" />
     <ClCompile Include="JEGraphics.cpp" />
     <ClCompile Include="JEInput.cpp" />
     <ClCompile Include="JESystem.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="JED3D.h" />
     <ClInclude Include="JEGraphics.h" />
     <ClInclude Include="JEInput.h" />
     <ClInclude Include="JESystem.h" />
