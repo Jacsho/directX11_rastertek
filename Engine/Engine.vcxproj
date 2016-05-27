@@ -142,17 +142,27 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="JECamera.cpp" />
+    <ClCompile Include="JEColorShader.cpp" />
     <ClCompile Include="JED3D.cpp" />
     <ClCompile Include="JEGraphics.cpp" />
     <ClCompile Include="JEInput.cpp" />
+    <ClCompile Include="JEModel.cpp" />
     <ClCompile Include="JESystem.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="JECamera.h" />
+    <ClInclude Include="JEColorShader.h" />
     <ClInclude Include="JED3D.h" />
     <ClInclude Include="JEGraphics.h" />
     <ClInclude Include="JEInput.h" />
+    <ClInclude Include="JEModel.h" />
     <ClInclude Include="JESystem.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Shaders\color.ps" />
+    <None Include="Shaders\color.vs" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
