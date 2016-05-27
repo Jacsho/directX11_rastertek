@@ -10,7 +10,7 @@ JEGraphics::JEGraphics()
 	m_pD3D = 0;
 	m_Camera = 0;
 	m_Model = 0;
-	m_ColorShader = 0;
+	m_TextureShader = 0;
 }
 
 
@@ -92,7 +92,8 @@ bool JEGraphics::Initialize(
 
 	// Initialize the model object.
 	result = m_Model->Initialize(
-		m_pD3D->GetDevice());
+		m_pD3D->GetDevice(),
+		L"../Engine/data/seafloor.dds");
 
 	if (!result)
 	{
@@ -106,15 +107,15 @@ bool JEGraphics::Initialize(
 	}
 
 	// Create the color shader object.
-	m_ColorShader = new JEColorShader;
+	m_TextureShader = new JETextureShader;
 
-	if (!m_ColorShader)
+	if (!m_TextureShader)
 	{
 		return false;
 	}
 
 	// Initialize the color shader object.
-	result = m_ColorShader->Initialize(
+	result = m_TextureShader->Initialize(
 		m_pD3D->GetDevice(), 
 		hwnd);
 	
@@ -137,11 +138,11 @@ bool JEGraphics::Initialize(
 void JEGraphics::Shutdown()
 {
 	// Release the color shader object.
-	if (m_ColorShader)
+	if (m_TextureShader)
 	{
-		m_ColorShader->Shutdown();
-		delete m_ColorShader;
-		m_ColorShader = 0;
+		m_TextureShader->Shutdown();
+		delete m_TextureShader;
+		m_TextureShader = 0;
 	}
 
 	// Release the model object.
@@ -208,12 +209,13 @@ bool JEGraphics::Render()
 		m_pD3D->GetDeviceContext());
 
 	// Render the model using the color shader.
-	result = m_ColorShader->Render(
+	result = m_TextureShader->Render(
 		m_pD3D->GetDeviceContext(), 
 		m_Model->GetIndexCount(), 
 		worldMatrix, 
 		viewMatrix, 
-		projectionMatrix);
+		projectionMatrix,
+		m_Model->GetTexture());
 
 	if (!result)
 	{

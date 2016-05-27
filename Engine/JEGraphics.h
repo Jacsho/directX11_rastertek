@@ -1,19 +1,13 @@
 #ifndef _JEGRAPHICS_H_
 #define _JEGRAPHICS_H_
 
-
-//==============================================
-// INCLUDES
-//==============================================
-//#include <Windows.h>
-
 //==============================================
 // MY INCLUDES
 //==============================================
 #include "JED3D.h"
 #include "JECamera.h"
 #include "JEModel.h"
-#include "JEColorShader.h"
+#include "JETextureShader.h"
 
 //==============================================
 // GLOBALS
@@ -38,7 +32,7 @@ class JEGraphics
 
 		JEModel * m_Model;
 
-		JEColorShader * m_ColorShader;
+		JETextureShader * m_TextureShader;
 
 	//==============================================
 	//			CONSTRUCTORS & DESTRUCTOR

@@ -36,10 +36,13 @@
     <ClCompile Include="JEModel.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="JEColorShader.cpp">
+    <ClCompile Include="JECamera.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="JECamera.cpp">
+    <ClCompile Include="JETexture.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="JETextureShader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -59,18 +62,21 @@
     <ClInclude Include="JEModel.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="JEColorShader.h">
+    <ClInclude Include="JECamera.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="JECamera.h">
+    <ClInclude Include="JETexture.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="JETextureShader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Shaders\color.ps">
+    <None Include="Shaders\texture.vs">
       <Filter>Shaders</Filter>
     </None>
-    <None Include="Shaders\color.vs">
+    <None Include="Shaders\texture.ps">
       <Filter>Shaders</Filter>
     </None>
   </ItemGroup>

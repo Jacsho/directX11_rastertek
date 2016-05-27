@@ -8,6 +8,11 @@
 #include <d3dx10math.h>
 
 //==============================================
+// MY INCLUDES
+//==============================================
+#include "JETexture.h"
+
+//==============================================
 // Class name: JEModel
 //==============================================
 class JEModel
@@ -19,7 +24,7 @@ class JEModel
 		struct VertexType
 		{
 			D3DXVECTOR3 position;
-			D3DXVECTOR4 color;
+			D3DXVECTOR2 texture;
 		};
 
 	//==============================================
@@ -33,6 +38,8 @@ class JEModel
 		ID3D11Buffer * m_indexBuffer;
 
 		int m_indexCount;
+
+		JETexture * m_Texture;
 	//==============================================
 	//			CONSTRUCTORS & DESTRUCTOR
 	//==============================================
@@ -49,7 +56,8 @@ class JEModel
 	//==============================================
 	public:
 		bool Initialize(
-			ID3D11Device * device
+			ID3D11Device * device,
+			WCHAR * textureFileName
 		);
 
 		void Shutdown();
@@ -68,11 +76,20 @@ class JEModel
 		void RenderBuffers(
 			ID3D11DeviceContext * deviceContext
 		);
+
+		bool LoadTexture(
+			ID3D11Device * device,
+			WCHAR * fileName
+		);
+
+		void ReleaseTexture();
 	//==============================================
 	//				   GETTERS
 	//==============================================
 	public:
 		int GetIndexCount();
+
+		ID3D11ShaderResourceView * GetTexture();
 };
 
 #endif
