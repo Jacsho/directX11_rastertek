@@ -7,7 +7,8 @@
 #include "JED3D.h"
 #include "JECamera.h"
 #include "JEModel.h"
-#include "JETextureShader.h"
+#include "JELightShader.h"
+#include "JELight.h"
 
 //==============================================
 // GLOBALS
@@ -32,7 +33,9 @@ class JEGraphics
 
 		JEModel * m_Model;
 
-		JETextureShader * m_TextureShader;
+		JELightShader * m_LightShader;
+
+		JELight * m_Light;
 
 	//==============================================
 	//			CONSTRUCTORS & DESTRUCTOR
@@ -62,7 +65,9 @@ class JEGraphics
 
 private:
 
-	bool Render();
+	bool Render(
+		float rotation
+	);
 };
 
 #endif

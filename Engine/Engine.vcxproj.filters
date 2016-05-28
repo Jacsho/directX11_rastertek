@@ -42,7 +42,10 @@
     <ClCompile Include="JETexture.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="JETextureShader.cpp">
+    <ClCompile Include="JELightShader.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="JELight.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -68,15 +71,18 @@
     <ClInclude Include="JETexture.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="JETextureShader.h">
+    <ClInclude Include="JELightShader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="JELight.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Shaders\texture.vs">
+    <None Include="Shaders\light.vs">
       <Filter>Shaders</Filter>
     </None>
-    <None Include="Shaders\texture.ps">
+    <None Include="Shaders\light.ps">
       <Filter>Shaders</Filter>
     </None>
   </ItemGroup>

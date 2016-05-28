@@ -1,5 +1,5 @@
-#ifndef _JETEXTURESHADER_H_
-#define _JETEXTURESHADER_H_
+#ifndef _JELIGHTESHADER_H_
+#define _JELIGHTESHADER_H_
 
 
 //==============================================
@@ -13,9 +13,9 @@ using namespace std;
 
 
 //==============================================
-// Class name: JETextureShader
+// Class name: JELightShader
 //==============================================
-class JETextureShader
+class JELightShader
 {
 	//==============================================
 	//				STRUCTURES
@@ -26,6 +26,16 @@ class JETextureShader
 			D3DXMATRIX world;
 			D3DXMATRIX view;
 			D3DXMATRIX projection;
+		};
+
+		struct LightBufferType
+		{
+			D3DXVECTOR4 diffuseColor;
+			D3DXVECTOR3 lightDirection;
+			float padding;  // Added extra padding so 
+							// structure is a multiple 
+							// of 16 for CreateBuffer 
+							// function requirements.
 		};
 	//==============================================
 	//				ATTRIBUTES
@@ -40,17 +50,19 @@ class JETextureShader
 		ID3D11Buffer * m_matrixBuffer;
 
 		ID3D11SamplerState * m_sampleState;
+
+		ID3D11Buffer * m_lightBuffer;
 	//==============================================
 	//			CONSTRUCTORS & DESTRUCTOR
 	//==============================================
 	public:
-		JETextureShader();
+		JELightShader();
 
-		JETextureShader(
-			const JETextureShader & other
+		JELightShader(
+			const JELightShader & other
 		);
 
-		~JETextureShader();
+		~JELightShader();
 	//==============================================
 	//				   METHODS
 	//==============================================
@@ -68,7 +80,9 @@ class JETextureShader
 			D3DXMATRIX worldMatrix,
 			D3DXMATRIX viewMatrix,
 			D3DXMATRIX projectionMatrix,
-			ID3D11ShaderResourceView * texture
+			ID3D11ShaderResourceView * texture,
+			D3DXVECTOR3 lightDirection,
+			D3DXVECTOR4 diffuseColor
 		);
 
 	private:
@@ -101,7 +115,9 @@ class JETextureShader
 			D3DXMATRIX worldMatrix,
 			D3DXMATRIX viewMatrix,
 			D3DXMATRIX projectionMatrix,
-			ID3D11ShaderResourceView * texture
+			ID3D11ShaderResourceView * texture,
+			D3DXVECTOR3 lightDirection,
+			D3DXVECTOR4 diffuseColor
 		);
 };
 

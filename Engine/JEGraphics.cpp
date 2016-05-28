@@ -10,7 +10,8 @@ JEGraphics::JEGraphics()
 	m_pD3D = 0;
 	m_Camera = 0;
 	m_Model = 0;
-	m_TextureShader = 0;
+	m_LightShader = 0;
+	m_Light = 0;
 }
 
 
@@ -80,7 +81,7 @@ bool JEGraphics::Initialize(
 	m_Camera->SetPosition(
 		0.0f, 
 		0.0f, 
-		-5.0f);
+		-3.0f);
 
 	// Create the model object.
 	m_Model = new JEModel;
@@ -106,16 +107,16 @@ bool JEGraphics::Initialize(
 		return false;
 	}
 
-	// Create the color shader object.
-	m_TextureShader = new JETextureShader;
+	// Create the light shader object.
+	m_LightShader = new JELightShader;
 
-	if (!m_TextureShader)
+	if (!m_LightShader)
 	{
 		return false;
 	}
 
 	// Initialize the color shader object.
-	result = m_TextureShader->Initialize(
+	result = m_LightShader->Initialize(
 		m_pD3D->GetDevice(), 
 		hwnd);
 	
@@ -123,12 +124,32 @@ bool JEGraphics::Initialize(
 	{
 		MessageBox(
 			hwnd, 
-			L"Could not initialize the color shader object.",
+			L"Could not initialize the light shader object.",
 			L"Error", 
 			MB_OK);
 
 		return false;
 	}
+
+	// Create the light object.
+	m_Light = new JELight;
+
+	if (!m_Light)
+	{
+		return false;
+	}
+
+	// Initialize the light object.
+	m_Light->SetDiffuseColor(
+		1.0f, 
+		0.0f, 
+		1.0f, 
+		1.0f);
+
+	m_Light->SetDirection(
+		0.0f, 
+		0.0f, 
+		1.0f);
 
 	return true;
 }
@@ -137,12 +158,19 @@ bool JEGraphics::Initialize(
 //==============================================
 void JEGraphics::Shutdown()
 {
-	// Release the color shader object.
-	if (m_TextureShader)
+	// Release the light object.
+	if (m_Light)
 	{
-		m_TextureShader->Shutdown();
-		delete m_TextureShader;
-		m_TextureShader = 0;
+		delete m_Light;
+		m_Light = 0;
+	}
+
+	// Release the color shader object.
+	if (m_LightShader)
+	{
+		m_LightShader->Shutdown();
+		delete m_LightShader;
+		m_LightShader = 0;
 	}
 
 	// Release the model object.
@@ -173,15 +201,26 @@ void JEGraphics::Shutdown()
 bool JEGraphics::Frame()
 {
 	bool result;
-	
-	result = Render();
+	static float rotation = 0.0f;
+
+	// Update the rotation variable each frame.
+	rotation += (float)D3DX_PI * 0.01f;
+
+	if (rotation > 360.0f)
+	{
+		rotation -= 360.0f;
+	}
+
+	result = Render(rotation);
 
 	return result;
 }
 
 
 //==============================================
-bool JEGraphics::Render()
+bool JEGraphics::Render(
+	float rotation
+)
 {
 	D3DXMATRIX viewMatrix, projectionMatrix, worldMatrix;
 	bool result;
@@ -203,19 +242,24 @@ bool JEGraphics::Render()
 	m_pD3D->GetWorldMatrix(worldMatrix);
 	m_pD3D->GetProjectionMatrix(projectionMatrix);
 
+	// Rotate the world matrix by the rotation value so that the triangle will spin.
+	D3DXMatrixRotationY(&worldMatrix, rotation);
+
 	// Put the model vertex and index buffers on 
 	// the graphics pipeline to prepare them for drawing.
 	m_Model->Render(
 		m_pD3D->GetDeviceContext());
 
 	// Render the model using the color shader.
-	result = m_TextureShader->Render(
+	result = m_LightShader->Render(
 		m_pD3D->GetDeviceContext(), 
 		m_Model->GetIndexCount(), 
 		worldMatrix, 
 		viewMatrix, 
 		projectionMatrix,
-		m_Model->GetTexture());
+		m_Model->GetTexture(),
+		m_Light->GetDirection(),
+		m_Light->GetDiffuseColor());
 
 	if (!result)
 	{
