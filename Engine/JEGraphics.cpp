@@ -81,7 +81,7 @@ bool JEGraphics::Initialize(
 	m_Camera->SetPosition(
 		0.0f, 
 		0.0f, 
-		-3.0f);
+		-8.0f);
 
 	// Create the model object.
 	m_Model = new JEModel;
@@ -94,6 +94,7 @@ bool JEGraphics::Initialize(
 	// Initialize the model object.
 	result = m_Model->Initialize(
 		m_pD3D->GetDevice(),
+		"../Engine/data/cube.txt",
 		L"../Engine/data/seafloor.dds");
 
 	if (!result)
@@ -142,7 +143,7 @@ bool JEGraphics::Initialize(
 	// Initialize the light object.
 	m_Light->SetDiffuseColor(
 		1.0f, 
-		0.0f, 
+		1.0f, 
 		1.0f, 
 		1.0f);
 
@@ -201,17 +202,25 @@ void JEGraphics::Shutdown()
 bool JEGraphics::Frame()
 {
 	bool result;
-	static float rotation = 0.0f;
+	static float rotationY = 0.0f;
+	static float rotationZ = 0.0f;
 
 	// Update the rotation variable each frame.
-	rotation += (float)D3DX_PI * 0.01f;
+	rotationY += (float)D3DX_PI * 0.005f;
 
-	if (rotation > 360.0f)
+	if (rotationY > 360.0f)
 	{
-		rotation -= 360.0f;
+		rotationY -= 360.0f;
 	}
 
-	result = Render(rotation);
+	rotationZ += (float)D3DX_PI * 0.001f;
+
+	if (rotationZ > 360.0f)
+	{
+		rotationZ -= 360.0f;
+	}
+
+	result = Render(rotationY, rotationZ);
 
 	return result;
 }
@@ -219,7 +228,8 @@ bool JEGraphics::Frame()
 
 //==============================================
 bool JEGraphics::Render(
-	float rotation
+	float rotationY,
+	float rotationZ
 )
 {
 	D3DXMATRIX viewMatrix, projectionMatrix, worldMatrix;
@@ -243,7 +253,12 @@ bool JEGraphics::Render(
 	m_pD3D->GetProjectionMatrix(projectionMatrix);
 
 	// Rotate the world matrix by the rotation value so that the triangle will spin.
-	D3DXMatrixRotationY(&worldMatrix, rotation);
+	D3DXMATRIX matRotationY, matRotationZ;
+	D3DXMatrixRotationY(&matRotationY, rotationY);
+	D3DXMatrixRotationX(&matRotationZ, rotationZ);
+
+	D3DXMatrixMultiply(&worldMatrix, &worldMatrix, &matRotationY);
+	D3DXMatrixMultiply(&worldMatrix, &worldMatrix, &matRotationZ);
 
 	// Put the model vertex and index buffers on 
 	// the graphics pipeline to prepare them for drawing.

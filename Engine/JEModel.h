@@ -6,6 +6,8 @@
 //==============================================
 #include <d3d11.h>
 #include <d3dx10math.h>
+#include <fstream>
+using namespace std;
 
 //==============================================
 // MY INCLUDES
@@ -28,6 +30,13 @@ class JEModel
 			D3DXVECTOR3 normal;
 		};
 
+		struct ModelType
+		{
+			float x, y, z;
+			float tu, tv;
+			float nx, ny, nz;
+		};
+
 	//==============================================
 	//				ATTRIBUTES
 	//==============================================
@@ -41,6 +50,8 @@ class JEModel
 		int m_indexCount;
 
 		JETexture * m_Texture;
+
+		ModelType * m_model;
 	//==============================================
 	//			CONSTRUCTORS & DESTRUCTOR
 	//==============================================
@@ -58,6 +69,7 @@ class JEModel
 	public:
 		bool Initialize(
 			ID3D11Device * device,
+			char * modelFileName,
 			WCHAR * textureFileName
 		);
 
@@ -84,6 +96,12 @@ class JEModel
 		);
 
 		void ReleaseTexture();
+
+		bool LoadModel(
+			char * fileName
+		);
+
+		void ReleaseModel();
 	//==============================================
 	//				   GETTERS
 	//==============================================

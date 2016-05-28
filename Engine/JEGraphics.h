@@ -66,7 +66,8 @@ class JEGraphics
 private:
 
 	bool Render(
-		float rotation
+		float rotationY,
+		float rotationZ
 	);
 };
 
